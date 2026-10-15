@@ -1,0 +1,13 @@
+namespaces:
+- author:
+  - BrainSTEM Team
+  contact:
+  - petersen.peter@gmail.com
+  doc: "BrainSTEM (https://www.brainstem.org) experimental metadata in NWB: the BrainSTEM
+    records an NWB\nfile was made from, with every field and the links between them."
+  name: ndx-brainstem
+  schema:
+  - namespace: core
+  - namespace: ndx-anatomical-localization
+  - source: ndx-brainstem.extensions.yaml
+  version: 0.1.0
