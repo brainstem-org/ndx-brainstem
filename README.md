@@ -4,7 +4,7 @@ An [NWB](https://www.nwb.org) extension that stores [BrainSTEM](https://www.brai
 
 Files are written by [brainstem-nwb](https://github.com/brainstem-org/brainstem-nwb) (`brainstem-nwb export --extension brainstem`). Core NWB fields (Subject, Devices, electrode groups, epochs and the text fields) describe the experiment for every NWB reader. This extension adds the structured detail behind them, so nothing BrainSTEM records is lost.
 
-**Status:** private, pre-release (0.1.0). The schema may change before 1.0.
+**Status:** private, pre-release (0.2.0). The schema may change before 1.0.
 
 ## What a file contains
 
@@ -12,7 +12,7 @@ Files are written by [brainstem-nwb](https://github.com/brainstem-org/brainstem-
 
 - **Provenance attributes:** export format version and scope, export time and checksum, the BrainSTEM project, session, subject and unit ids, and the exporter and mapping versions.
 - **One `BrainstemTable` per kind of record:** `procedures`, `procedure_episodes`, `materials`, `interfaces`, `acquisitions`, `manipulations`, `behaviors`, `specimen_sets`, `specimens`, `logs`, `log_entries`, `regions`, `resources` (catalog entries, equipment, setups, assays, protocols), `people`, and others. Each row is one BrainSTEM record.
-- **`schemas`** (`BrainstemSchemaTable`): the BrainSTEM JSON schemas that the tables name, when the export provides them.
+- **`schemas`** (`BrainstemSchemaTable`): every BrainSTEM JSON schema the tables name, with its stable URL (published versions never change) and, when embedded, the schema itself.
 
 ### `BrainstemTable` columns
 
@@ -21,7 +21,7 @@ Files are written by [brainstem-nwb](https://github.com/brainstem-org/brainstem-
 | `brainstem_id`, `brainstem_model` | required text | The record's BrainSTEM id and model label (e.g. `modules.procedure`) |
 | one per BrainSTEM field | text | Strings as stored. Other values (numbers, booleans, JSON objects such as `type_json`) are JSON text. An empty string means no value |
 | one per link field | ragged `DynamicTableRegion` | Rows of another `BrainstemTable`, or of `/intervals/epochs` |
-| `details_schema` | text | `<Family>/<Type>@<version>` of the record's typed details, e.g. `Procedure/VirusInjection@3.0.0` |
+| `details_schema`, `coordinates_schema` | text | `<Family>/<Type>@<version>` of the record's typed details or coordinates, e.g. `Procedure/VirusInjection@3.0.0` |
 | `unresolved_links` | text | JSON `{field: [ids]}` of links to records not in the file |
 
 The table attribute `brainstem_models` lists the model labels of the table's rows.

@@ -31,9 +31,16 @@ groups:
     neurodata_type_inc: VectorData
     dtype: text
     doc: BrainSTEM JSON schema of the record's typed details, as 
-      '<Family>/<Type>@<version>' (e.g. 'Procedure/VirusInjection@3.0.0'); empty
-      when the record has no typed details. The schema itself is in the 
-      'schemas' table when the export provided it.
+      '<Family>/<Type>@<version>' (e.g. 'Procedure/VirusInjection@3.0.0'); 
+      '<Family>/<Type>' when the record stores no version; empty when the record
+      has no typed details. The 'schemas' table gives its URL (and the schema, 
+      when embedded).
+    quantity: '?'
+  - name: coordinates_schema
+    neurodata_type_inc: VectorData
+    dtype: text
+    doc: BrainSTEM JSON schema of the record's coordinates, as for 
+      details_schema (family 'Coordinates').
     quantity: '?'
   - name: unresolved_links
     neurodata_type_inc: VectorData
@@ -43,17 +50,25 @@ groups:
     quantity: '?'
 - neurodata_type_def: BrainstemSchemaTable
   neurodata_type_inc: DynamicTable
-  doc: The BrainSTEM JSON schemas that the 'details_schema' columns name, as 
-    JSON text.
+  doc: "The BrainSTEM JSON schemas that the tables' schema columns (details_schema,
+    coordinates_schema) name: their stable URL and, when embedded, the schema itself.
+    Published BrainSTEM schema versions never change, so the URL can be cited."
   datasets:
   - name: schema_id
     neurodata_type_inc: VectorData
     dtype: text
-    doc: "'<Family>/<Type>@<version>', as in the details_schema columns."
+    doc: "'<Family>/<Type>@<version>', or '<Family>/<Type>' for records that store
+      no version."
+  - name: schema_url
+    neurodata_type_inc: VectorData
+    dtype: text
+    doc: Stable URL of the schema version, e.g. 
+      https://www.brainstem.org/schemas/Procedure/VirusInjection/3.0.0.json; for
+      an id without a version, the URL listing the type's versions.
   - name: schema_json
     neurodata_type_inc: VectorData
     dtype: text
-    doc: The JSON schema (draft 7) as JSON text.
+    doc: The JSON schema (draft 7) as JSON text; empty when it was not embedded.
 - neurodata_type_def: BrainstemMetadata
   neurodata_type_inc: LabMetaData
   default_name: brainstem

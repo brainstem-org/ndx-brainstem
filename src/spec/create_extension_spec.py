@@ -18,7 +18,7 @@ from pynwb.spec import NWBAttributeSpec, NWBDatasetSpec, NWBGroupSpec, NWBNamesp
 def main():
     ns_builder = NWBNamespaceBuilder(
         name="""ndx-brainstem""",
-        version="""0.1.0""",
+        version="""0.2.0""",
         doc="""BrainSTEM (https://www.brainstem.org) experimental metadata in NWB: the BrainSTEM records an NWB
 file was made from, with every field and the links between them.""",
         author=["BrainSTEM Team"],
@@ -67,9 +67,17 @@ file was made from, with every field and the links between them.""",
                 dtype="text",
                 doc=(
                     "BrainSTEM JSON schema of the record's typed details, as '<Family>/<Type>@<version>' (e.g. "
-                    "'Procedure/VirusInjection@3.0.0'); empty when the record has no typed details. The schema "
-                    "itself is in the 'schemas' table when the export provided it."
+                    "'Procedure/VirusInjection@3.0.0'); '<Family>/<Type>' when the record stores no version; empty "
+                    "when the record has no typed details. The 'schemas' table gives its URL (and the schema, when "
+                    "embedded)."
                 ),
+                quantity="?",
+            ),
+            NWBDatasetSpec(
+                name="coordinates_schema",
+                neurodata_type_inc="VectorData",
+                dtype="text",
+                doc="BrainSTEM JSON schema of the record's coordinates, as for details_schema (family 'Coordinates').",
                 quantity="?",
             ),
             NWBDatasetSpec(
@@ -85,12 +93,20 @@ file was made from, with every field and the links between them.""",
     schema_table = NWBGroupSpec(
         neurodata_type_def="BrainstemSchemaTable",
         neurodata_type_inc="DynamicTable",
-        doc="The BrainSTEM JSON schemas that the 'details_schema' columns name, as JSON text.",
+        doc=(
+            "The BrainSTEM JSON schemas that the tables' schema columns (details_schema, coordinates_schema) name: "
+            "their stable URL and, when embedded, the schema itself. Published BrainSTEM schema versions never "
+            "change, so the URL can be cited."
+        ),
         datasets=[
             NWBDatasetSpec(name="schema_id", neurodata_type_inc="VectorData", dtype="text",
-                           doc="'<Family>/<Type>@<version>', as in the details_schema columns."),
+                           doc="'<Family>/<Type>@<version>', or '<Family>/<Type>' for records that store no version."),
+            NWBDatasetSpec(name="schema_url", neurodata_type_inc="VectorData", dtype="text",
+                           doc=("Stable URL of the schema version, e.g. "
+                                "https://www.brainstem.org/schemas/Procedure/VirusInjection/3.0.0.json; for an id "
+                                "without a version, the URL listing the type's versions.")),
             NWBDatasetSpec(name="schema_json", neurodata_type_inc="VectorData", dtype="text",
-                           doc="The JSON schema (draft 7) as JSON text."),
+                           doc="The JSON schema (draft 7) as JSON text; empty when it was not embedded."),
         ],
     )
 

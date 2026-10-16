@@ -48,7 +48,9 @@ def _metadata(nwbfile):
     acquisitions.add_row(brainstem_id="a1", brainstem_model="modules.dataacquisition", procedures=[0], epochs=[0, 1])
 
     schemas = BrainstemSchemaTable(name="schemas", description="schemas")
-    schemas.add_row(schema_id="Procedure/VirusInjection@3.0.0", schema_json=json.dumps({"type": "object"}))
+    schemas.add_row(schema_id="Procedure/VirusInjection@3.0.0",
+                    schema_url="https://www.brainstem.org/schemas/Procedure/VirusInjection/3.0.0.json",
+                    schema_json=json.dumps({"type": "object"}))
 
     return BrainstemMetadata(
         export_format_version="2.1", export_scope="session", exported_at="2025-01-15T12:00:00+00:00",
@@ -89,6 +91,7 @@ def test_round_trip(written):
         assert acquisitions["procedures"][0]["brainstem_id"].tolist() == ["p1"]
         assert acquisitions["epochs"][0]["start_time"].tolist() == [0.0, 1800.0]
         assert metadata.schemas["schema_id"][0] == "Procedure/VirusInjection@3.0.0"
+        assert metadata.schemas["schema_url"][0].endswith("/schemas/Procedure/VirusInjection/3.0.0.json")
 
 
 def test_schema_validation(written):

@@ -10,4 +10,4 @@ namespaces:
   - namespace: core
   - namespace: ndx-anatomical-localization
   - source: ndx-brainstem.extensions.yaml
-  version: 0.1.0
+  version: 0.2.0
