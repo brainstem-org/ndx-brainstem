@@ -8,7 +8,10 @@ groups:
     a record's typed details) as JSON; an empty string means no value. A field 
     that links to records in another BrainstemTable (or to the NWB epochs table)
     is a ragged DynamicTableRegion with the same name; links to records not in 
-    the file are listed in the 'unresolved_links' column.
+    the file are listed in the 'unresolved_links' column. A writer may add 
+    derived columns (for example the NWB device or epochs a record became, or an
+    ISO 8601 copy of a time field) and renames a field whose name DynamicTable 
+    reserves to 'record_<field>'.
   attributes:
   - name: brainstem_models
     dtype: text

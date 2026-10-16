@@ -1,6 +1,6 @@
 # Changelog for ndx-brainstem
 
-## 0.2.0 (unreleased)
+## 0.2.0
 
 - `BrainstemSchemaTable` gets a required `schema_url` column: the stable URL of each BrainSTEM schema version
   (`https://www.brainstem.org/schemas/<Family>/<Type>/<version>.json`). `schema_json` may be empty when the schema

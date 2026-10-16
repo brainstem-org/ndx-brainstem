@@ -10,8 +10,8 @@ Files are written by [brainstem-nwb](https://github.com/brainstem-org/brainstem-
 
 `/general/brainstem` (`BrainstemMetadata`, a `LabMetaData`) holds:
 
-- **Provenance attributes:** export format version and scope, export time and checksum, the BrainSTEM project, session, subject and unit ids, and the exporter and mapping versions.
-- **One `BrainstemTable` per kind of record:** `procedures`, `procedure_episodes`, `materials`, `interfaces`, `acquisitions`, `manipulations`, `behaviors`, `specimen_sets`, `specimens`, `logs`, `log_entries`, `regions`, `resources` (catalog entries, equipment, setups, assays, protocols), `people`, and others. Each row is one BrainSTEM record.
+- **Provenance attributes:** export format version and scope, export time, the checksum of the source export (`source_sha256`) and of the file's content (`content_sha256`), the BrainSTEM project, session, subject and unit ids, and the exporter and mapping versions.
+- **One `BrainstemTable` per kind of record**, for example `procedures`, `materials`, `interfaces`, `acquisitions`, `manipulations`, `behaviors`, `specimen_sets`, `specimens`, `logs`, `log_entries`, `regions`, `catalog`, `lab_resources` and `people`. Each row is one BrainSTEM record. The spec fixes no table names; the writer's current list is in brainstem-nwb's [extensions documentation](https://github.com/brainstem-org/brainstem-nwb/blob/main/docs/extensions.md).
 - **`schemas`** (`BrainstemSchemaTable`): every BrainSTEM JSON schema the tables name, with its stable URL (published versions never change) and, when embedded, the schema itself.
 
 ### `BrainstemTable` columns
@@ -23,6 +23,7 @@ Files are written by [brainstem-nwb](https://github.com/brainstem-org/brainstem-
 | one per link field | ragged `DynamicTableRegion` | Rows of another `BrainstemTable`, or of `/intervals/epochs` |
 | `details_schema`, `coordinates_schema` | text | `<Family>/<Type>@<version>` of the record's typed details or coordinates, e.g. `Procedure/VirusInjection@3.0.0` |
 | `unresolved_links` | text | JSON `{field: [ids]}` of links to records not in the file |
+| writer-defined | text or `DynamicTableRegion` | Columns the writer adds beyond the fields, such as `nwb_device` (the NWB device a row became), `nwb_epochs` (rows of `/intervals/epochs`), `log` and `catalog_entry` (links to the parent log or catalog entry). A field whose name a `DynamicTable` reserves is written as `record_<field>`; a `*_time` field also gets an ISO 8601 copy named `<field>_iso` |
 
 The table attribute `brainstem_models` lists the model labels of the table's rows.
 
@@ -42,7 +43,7 @@ NWB stores the extension's schema in every file, so pynwb (and MatNWB) can read 
 ## Installation (development)
 
 ```bash
-pip install -e ".[dev]"   # or: pip install -e . && pip install pytest
+pip install -e . --group dev   # pip 25.1 or newer; or: pip install -e . && pip install pytest
 python src/spec/create_extension_spec.py   # regenerate spec/*.yaml after changing the spec
 pytest
 ```

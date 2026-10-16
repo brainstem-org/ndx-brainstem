@@ -19,8 +19,10 @@ def main():
     ns_builder = NWBNamespaceBuilder(
         name="""ndx-brainstem""",
         version="""0.2.0""",
-        doc="""BrainSTEM (https://www.brainstem.org) experimental metadata in NWB: the BrainSTEM records an NWB
-file was made from, with every field and the links between them.""",
+        doc=(
+            "BrainSTEM (https://www.brainstem.org) experimental metadata in NWB: the BrainSTEM records an NWB "
+            "file was made from, with every field and the links between them."
+        ),
         author=["BrainSTEM Team"],
         contact=["petersen.peter@gmail.com"],
     )
@@ -38,7 +40,9 @@ file was made from, with every field and the links between them.""",
             "Text columns hold strings as stored and other values (numbers, booleans, JSON objects such as a "
             "record's typed details) as JSON; an empty string means no value. A field that links to records in "
             "another BrainstemTable (or to the NWB epochs table) is a ragged DynamicTableRegion with the same name; "
-            "links to records not in the file are listed in the 'unresolved_links' column."
+            "links to records not in the file are listed in the 'unresolved_links' column. A writer may add "
+            "derived columns (for example the NWB device or epochs a record became, or an ISO 8601 copy of a time "
+            "field) and renames a field whose name DynamicTable reserves to 'record_<field>'."
         ),
         attributes=[
             NWBAttributeSpec(

@@ -13,7 +13,6 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 classifiers = [
-    # TODO: update these classifiers before release
     "Programming Language :: Python",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -22,7 +21,6 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
 ]
 keywords = [
     'NeurodataWithoutBorders',
@@ -32,7 +30,7 @@ keywords = [
 ]
 dependencies = [
     "pynwb>=3.1.3",  # required by ndx-anatomical-localization
-    "hdmf>=4.0.0",  # 4.0.0 required for numpy 2.0 compatibility
+    "hdmf>=4.2.0",  # floor of ndx-anatomical-localization 0.1.0 (4.0.0 is needed for numpy 2.0)
     "ndx-anatomical-localization>=0.1,<0.2",  # included namespace (coordinates of procedures and interfaces)
 ]
 
@@ -84,8 +82,7 @@ packages = [
 # The resulting directory structure within the wheel will be:
 # ndx_brainstem/
 # ├── __init__.py
-# ├── spec
-# └── widgets
+# └── spec
 [tool.hatch.build.targets.wheel.sources]
 "spec" = "ndx_brainstem/spec"
 
