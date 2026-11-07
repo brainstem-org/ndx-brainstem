@@ -131,7 +131,7 @@ jobs:
 
       - uses: actions/setup-python@v6
         with:
-          python-version: "3.x"  # use the latest stable version of Python
+          python-version: "3.13"  # newest Python in the test matrix (3.x picks versions h5py has no wheels for yet)
 
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"

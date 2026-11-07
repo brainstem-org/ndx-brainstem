@@ -81,6 +81,7 @@ spec_resolve_type_inc = False
 # Default type map to be used. This is the type map where dependent namespaces are stored. In the case of
 # NWB this is spec_default_type_map = pynwb.get_type_map()
 import pynwb  # noqa: E402
+import ndx_anatomical_localization  # noqa: E402, F401  (registers the namespace that ndx-brainstem includes)
 spec_default_type_map = pynwb.get_type_map()
 
 # Default specification classes for groups datasets and namespaces. In the case of NWB these are the NWB-specfic
