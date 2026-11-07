@@ -4,7 +4,13 @@ An [NWB](https://www.nwb.org) extension that stores [BrainSTEM](https://www.brai
 
 Files are written by [brainstem-nwb](https://github.com/brainstem-org/brainstem-nwb) (`brainstem-nwb export --extension brainstem`). Core NWB fields (Subject, Devices, electrode groups, epochs and the text fields) describe the experiment for every NWB reader. This extension adds the structured detail behind them, so nothing BrainSTEM records is lost.
 
-**Status:** private, pre-release (0.2.0). The schema may change before 1.0.
+**Status:** pre-release (0.2.0). The schema may change before 1.0.
+
+## Installation
+
+```bash
+pip install ndx-brainstem
+```
 
 ## What a file contains
 

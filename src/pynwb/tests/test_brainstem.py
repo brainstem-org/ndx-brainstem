@@ -24,7 +24,9 @@ def _nwbfile():
 
 
 def _metadata(nwbfile):
-    regions = BrainstemTable(name="regions", description="brain regions", brainstem_models=["taxonomies.anatomicalregion"])
+    regions = BrainstemTable(
+        name="regions", description="brain regions", brainstem_models=["taxonomies.anatomicalregion"]
+    )
     regions.add_column("acronym", "region acronym")
     regions.add_row(brainstem_id="r1", brainstem_model="taxonomies.anatomicalregion", acronym="CA1")
 
